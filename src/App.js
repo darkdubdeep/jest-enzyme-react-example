@@ -1,24 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import './index.css';
 
-function App() {
-  return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>Hello</p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
+class App extends Component {
+  state = {
+    counter: 0,
+    countError: false
+  };
+  render() {
+    return (
+      <div data-test='component-app'>
+        <h1>hello</h1>
+        <h1 data-test='counter-display'>
+          The counter is currently {this.state.counter}
+        </h1>
+        {this.state.countError && (
+          <h1 className='error-text' data-test='error-text'>
+            Error
+          </h1>
+        )}
+        <button
+          data-test='increment-button'
+          onClick={() =>
+            this.setState({
+              counter: this.state.counter + 1,
+              countError: false
+            })
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          Increment Button
+        </button>
+        <button
+          data-test='decrement-button'
+          onClick={() => {
+            if (this.state.counter === 0) {
+              this.setState({
+                countError: true
+              });
+            } else {
+              this.setState({
+                counter: this.state.counter - 1
+              });
+            }
+          }}
+        >
+          decrement button
+        </button>
+      </div>
+    );
+  }
 }
 
 export default App;
