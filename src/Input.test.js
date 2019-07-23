@@ -11,17 +11,46 @@ const setup = (initialState = {}) => {
     const wrapper = shallow(<Input store={store} />)
         .dive()
         .dive();
+    return wrapper;
 };
 describe('render', () => {
     describe('word has not been guessed', () => {
-        test('renders component without eror', () => {});
-        test('renders innput box', () => {});
-        test('renders submit button', () => {});
+        let wrapper;
+        beforeEach(() => {
+            const initialState = { success: false };
+            wrapper = setup(initialState);
+        });
+        test('renders component without eror', () => {
+            const component = findByTestAttr(wrapper, 'component-input');
+            expect(component.length).toBe(1);
+        });
+        test('renders innput box', () => {
+            const inputBox = findByTestAttr(wrapper, 'input-box');
+            expect(inputBox.length).toBe(1);
+        });
+        test('renders submit button', () => {
+            const submitButton = findByTestAttr(wrapper, 'submit-button');
+            expect(submitButton.length).toBe(1);
+        });
     });
     describe('word has  been guessed', () => {
-        test('renders component without eror', () => {});
-        test('does not renders innput box', () => {});
-        test('does not renders submit button', () => {});
+        let wrapper;
+        beforeEach(() => {
+            const initialState = { success: true };
+            wrapper = setup(initialState);
+        });
+        test('renders component without eror', () => {
+            const component = findByTestAttr(wrapper, 'component-input');
+            expect(component.length).toBe(1);
+        });
+        test('does not renders innput box', () => {
+            const inputBox = findByTestAttr(wrapper, 'input-box');
+            expect(inputBox.length).toBe(0);
+        });
+        test('does not renders submit button', () => {
+            const inputBox = findByTestAttr(wrapper, 'input-box');
+            expect(inputBox.length).toBe(0);
+        });
     });
 });
 
